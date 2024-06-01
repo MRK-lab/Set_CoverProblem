@@ -292,3 +292,86 @@ Ağ Tasarımı: Ağ düğümlerinin kapsanması.
 Veri Madenciliği: Özellik seçimi.
 Hizmet Yerleştirme: Minimum sayıda hizmet noktası ile tüm müşterilerin kapsanması.
 Sonuç olarak, set cover problemi teorik olarak önemli olduğu kadar pratik uygulamalarda da yaygın olarak karşımıza çıkar.
+
+################ KOD AÇIKLAMASI ###############
+
+Evren ve Alt Kümelerin Oluşturulması
+
+python
+Kodu kopyala
+import random
+import itertools
+
+def generate_universe_and_subsets(universe_size, num_subset, min_set_size, max_set_size):
+    universe= set(range(1, universe_size+1))
+
+    subsets = []
+    remaining_elements = set(universe)
+
+    while remaining_elements:
+        set_size= random.randint(min_set_size, max_set_size)
+        new_subset= set(random.sample(list(remaining_elements), min(set_size, len(remaining_elements))))
+        subsets.append(new_subset)
+        remaining_elements -= new_subset
+
+    for _ in range(num_subset - len(subsets)):
+        set_size = random.randint(min_set_size, max_set_size)
+        new_subset = set(random.sample(list(universe), set_size))
+        subsets.append(new_subset)
+
+    return universe, subsets
+
+universe, subsets = generate_universe_and_subsets(universe_size=80, num_subset=50, min_set_size=2, max_set_size=15)
+generate_universe_and_subsets fonksiyonu, belirli bir boyutta evren kümesi ve alt kümeler oluşturur.
+universe_size, evren kümesinin boyutunu belirler.
+num_subset, kaç tane alt küme oluşturulacağını belirler.
+min_set_size ve max_set_size, alt kümelerin minimum ve maksimum boyutlarını belirler.
+İlk döngüde, remaining_elements (kapsanmamış elemanlar) boşalana kadar rastgele boyutta ve elemanlarda alt kümeler oluşturulur.
+İkinci döngüde, yeterli sayıda alt küme oluşturulmadıysa rastgele alt kümeler eklenir.
+Brute Force Set Cover
+
+python
+Kodu kopyala
+def brute_force_set_cover(universe, sets):
+    n = len(sets)
+
+    for  i in range(1, n+1):
+        for subset in itertools.combinations(sets, i):
+            if set.union(*subset) == universe:
+                return subset
+brute_force_set_cover fonksiyonu, tüm alt küme kombinasyonlarını deneyerek evren kümesini kapsayan en küçük alt küme kombinasyonunu bulur.
+itertools.combinations kullanarak alt kümelerin tüm olası kombinasyonlarını oluşturur.
+Eğer bir kombinasyon evren kümesini tam olarak kapsıyorsa (yani birleşim evren kümesine eşitse), bu kombinasyon döndürülür.
+Greedy Set Cover
+
+python
+Kodu kopyala
+def greedy_set_cover(universe, sets):
+    uncovered = universe.copy()
+    solution = []
+
+    while uncovered:
+        best_set = max(sets, key=lambda s: len(s & uncovered))
+        solution.append(best_set)
+        uncovered -= best_set
+
+    return solution
+greedy_set_cover fonksiyonu, açgözlü bir yaklaşım kullanarak evren kümesini kapsayan alt kümeleri seçer.
+uncovered kümesi, kapsanmamış elemanları takip eder.
+Döngüde, sets içindeki alt kümelerden uncovered ile en çok ortak elemanı olan alt küme (best_set) seçilir.
+Bu alt küme çözüme eklenir ve uncovered kümesinden bu alt kümenin elemanları çıkarılır.
+Döngü, uncovered kümesi boşalana kadar devam eder.
+Sonuçların Karşılaştırılması
+
+python
+Kodu kopyala
+solution = greedy_set_cover(universe, subsets)
+print(solution)
+print(len(solution))
+
+solution = brute_force_set_cover(universe, subsets)
+print(solution)
+print(len(solution))
+greedy_set_cover fonksiyonu çağrılır ve sonucu yazdırılır.
+brute_force_set_cover fonksiyonu çağrılır ve sonucu yazdırılır.
+Her iki fonksiyonun sonucu ve seçilen alt kümelerin sayısı karşılaştırılır.
