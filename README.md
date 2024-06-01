@@ -7,7 +7,7 @@ Amaç: Evrensel kümedeki tüm elemanları kapsayan en az sayıda alt kümeyi se
 Formülasyon
 Formel olarak, set cover problemi şu şekilde tanımlanabilir:
 
-𝑈
+
 U bir evrensel küme olsun.
 𝑆
 =
