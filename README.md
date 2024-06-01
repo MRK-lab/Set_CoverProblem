@@ -1,15 +1,16 @@
-Set cover problemi, kombinatoryal optimizasyon ve hesaplamalı zorluk teorisi alanlarında önemli bir problemdir. Bu problem, belirli bir evrensel kümenin alt kümeleri olan bir dizi küme verildiğinde, bu alt kümelerden mümkün olan en az sayıda küme seçerek evrensel kümeyi kapsama problemidir.
+The Set Cover Problem is an important problem in the fields of combinatorial optimization and computational complexity theory. This problem involves finding the smallest subset of sets that cover a given universal set. Specifically, given a collection of subsets of a universal set, the goal is to select the fewest possible subsets that together cover the entire universal set.
 
-Set Cover Probleminin Tanımı
-Evrensel Küme (U): Elemanlarının kapsanması gereken bir küme.
-Alt Kümeler (S): Evrensel kümenin elemanlarını kapsayan alt kümeler koleksiyonu.
-Amaç: Evrensel kümedeki tüm elemanları kapsayan en az sayıda alt kümeyi seçmek.
+Definition of the Set Cover Problem
+Universal Set (U): A set of elements that need to be covered.
+Subsets (S): A collection of subsets that collectively cover the elements of the universal set.
+Objective: To select the minimum number of subsets that cover all the elements in the universal set.
+
 Formülasyon
 Formel olarak, set cover problemi şu şekilde tanımlanabilir:
 
 
 U bir evrensel küme olsun.
-𝑆
+
 =
 {
 𝑆
